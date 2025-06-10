@@ -18,14 +18,17 @@ const TechIcon: React.FC<TechProps> = ({ name, iconSrc }) => {
 
 const Technologies: React.FC = () => {
     const techStack: TechProps[] = [
-        { name: "React", iconSrc: '/icons/dev/react.svg' },
-        { name: "MySQL", iconSrc: '/icons/dev/mysql.svg' },
-        { name: "TypeScript", iconSrc: '/icons/dev/typescript.svg' },
-        { name: "Java", iconSrc: '/icons/dev/java.svg' },
-        { name: "Git", iconSrc: '/icons/dev/git.svg' },
-        { name: "Angular", iconSrc: '/icons/dev/angular.svg' },
-        { name: "AWS", iconSrc: '/icons/dev/aws.svg' },
-        { name: "Node.js", iconSrc: '/icons/dev/node.svg' },
+        { name: "Angular",     iconSrc: '/icons/dev/angular.svg' },
+        { name: "React",       iconSrc: '/icons/dev/react.svg' },
+        { name: "TypeScript",  iconSrc: '/icons/dev/typescript.svg' },
+        { name: "Node.js",     iconSrc: '/icons/dev/node.svg' },
+        { name: "Java",        iconSrc: '/icons/dev/java.svg' },
+        { name: "Spring Boot", iconSrc: '/icons/dev/spring-boot.svg' },
+        { name: "WordPress",   iconSrc: '/icons/dev/wordpress.svg' },
+        { name: "MySQL",       iconSrc: '/icons/dev/mysql.svg' },
+        { name: "AWS",         iconSrc: '/icons/dev/aws.svg' },
+        { name: "Git",         iconSrc: '/icons/dev/git.svg' },
+        { name: "Docker",      iconSrc: '/icons/dev/docker.svg' },
     ];
     
     return (

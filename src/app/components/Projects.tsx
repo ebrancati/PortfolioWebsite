@@ -54,14 +54,21 @@ const Projects: React.FC = () => {
     const projectsData: ProjectProps[] = [
         {
             title: "15 Puzzle",
-            description: "A Progressive Web App implementation of the classic 15 puzzle game. Features include timer, move counter, and a global leaderboard to compete with players worldwide.",
+            description: "A Progressive Web App implementation of the classic 15 puzzle game. Features include timer, move counter, and a global leaderboard to compete with players worldwide",
             technologies: ["HTML", "CSS", "JavaScript", "Node.js", "AWS"],
             imageUrl: "/projects/15puzzle-online.png",
             link: "https://15puzzle.online"
         },
         {
+            title: "OnlineCheckers.org",
+            description: "Open source web platform dedicated to the game of checkers, you can play online with friends or against an AI",
+            technologies: ["Angular", "Bootstrap", "Spring Boot", "Quarkus", "AWS"],
+            imageUrl: "/projects/online-checkers-org.png",
+            link: "https://OnlineCheckers.org"
+        },
+        {
             title: "AlgorithmsVisualized",
-            description: "An interactive platform to explore and learn fundamental algorithms through real-time visualizations.",
+            description: "An interactive platform to explore and learn fundamental algorithms through real-time visualizations",
             technologies: ["React", "TypeScript", "Tailwind CSS"],
             imageUrl: "/projects/algorithms-visualized.PNG",
             link: "https://algorithms-visualized.vercel.app"
@@ -71,9 +78,14 @@ const Projects: React.FC = () => {
     return (
         <section id="projects" className="py-16">
             <h2 className="text-3xl font-bold text-center mb-12">Projects</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="flex flex-wrap justify-center gap-8">
                 {projectsData.map((project, index) => (
-                    <ProjectCard key={index} {...project} />
+                    <div 
+                        key={index}
+                        className="w-full md:w-80 lg:w-96 max-w-md flex"
+                    >
+                        <ProjectCard {...project} />
+                    </div>
                 ))}
             </div>
         </section>

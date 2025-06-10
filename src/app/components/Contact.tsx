@@ -7,11 +7,18 @@ interface FormData {
     message: string;
 }
 
+interface SubmitStatus {
+    success: boolean;
+    message: string;
+}
+
 const Contact: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         email: '',
         message: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [submitStatus, setSubmitStatus] = useState<SubmitStatus | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -21,21 +28,44 @@ const Contact: React.FC = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
-        const subject = `Message from: ${formData.email}`;
-        const body = formData.message;
+        try {
+            const response = await fetch('https://your-api-gateway-url.execute-api.region.amazonaws.com/prod/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-        const mailtoUrl = `mailto:vincent.brancati04@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            const data = await response.json();
 
-        window.location.href = mailtoUrl;
+            if (response.ok) {
+                setSubmitStatus({ success: true, message: 'Message sent successfully!' });
+                setFormData({ email: '', message: '' });
+            } else {
+                setSubmitStatus({ success: false, message: data.message || 'Error sending message. Please try again later.' });
+            }
+        } catch (error) {
+            setSubmitStatus({ success: false, message: 'Connection error. Please check your internet connection.' });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
         <section id="contact" className="py-16">
             <div className="container mx-auto px-4 max-w-md">
                 <h2 className="text-3xl font-bold text-center mb-8">Contact Me</h2>
+
+                {submitStatus && (
+                    <div className={`mb-4 p-4 rounded ${submitStatus.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                        {submitStatus.message}
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
                     <div className="mb-4">
@@ -66,9 +96,10 @@ const Contact: React.FC = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300"
+                        disabled={isSubmitting}
+                        className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300 disabled:bg-blue-300"
                     >
-                        Send Message
+                        {isSubmitting ? 'Sending...' : 'Send Message'}
                     </button>
                 </form>
             </div>
